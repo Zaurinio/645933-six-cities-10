@@ -7,19 +7,21 @@ import Room from '../../pages/Room/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import { Place } from '../../types/places';
+import { City } from '../../types/city';
 
 type AppScreenProps = {
   places: Place[];
+  city: City;
 }
 
-function App({ places }: AppScreenProps): JSX.Element {
+function App({ places, city }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main}>
           <Route
             index
-            element={<MainScreen places={places} />}
+            element={<MainScreen places={places} city={city} />}
           />
           <Route
             path={AppRoute.Login}

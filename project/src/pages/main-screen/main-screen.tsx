@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { Place } from '../../types/places';
+import { City } from '../../types/city';
 import Places from '../../components/places/places';
+import Map from '../../components/map/map';
 
 type MainScreenProps = {
   places: Place[];
+  city: City;
 }
 
-function MainScreen({ places }: MainScreenProps): JSX.Element {
-  const [, setPlaceId] = useState<number | null>(null);
+function MainScreen({ places, city }: MainScreenProps): JSX.Element {
+  const [placeId, setPlaceId] = useState<number | null>(null);
 
   return (
     <div className="page page--gray page--main">
@@ -85,7 +88,9 @@ function MainScreen({ places }: MainScreenProps): JSX.Element {
               onCardMouseOver={setPlaceId}
             />
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map places={places} city={city} placeId={placeId} />
+              </section>
             </div>
           </div>
         </div>

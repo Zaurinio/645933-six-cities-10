@@ -14,6 +14,13 @@ export const places: Place[] = [
     guests: 'Max 4 adults',
     price: 120,
     facilities: ['Wi-Fi', 'Washing machine', 'Towels', 'Coffee machine'],
+    coordinations:
+    {
+      lat: 52.3909553943508,
+      lng: 4.85309666406198,
+      zoom: 3
+    }
+    ,
     ownerInformation: {
       src: 'img/avatar-angelina.jpg',
       name: 'Angelina',
@@ -31,6 +38,13 @@ export const places: Place[] = [
     guests: 'Max 6 adults',
     price: 330,
     facilities: ['Wi-Fi', 'Washing machine', 'Towels', 'Coffee machine', 'Baby seat', 'Kitchen'],
+    coordinations:
+    {
+      lat: 52.369553943508,
+      lng: 4.85309666406198,
+      zoom: 3
+    }
+    ,
     ownerInformation: {
       src: 'img/avatar-vasiliy.jpg',
       name: 'Vasiliy',
@@ -48,6 +62,13 @@ export const places: Place[] = [
     guests: 'Max 5 adults',
     price: 990,
     facilities: ['Wi-Fi', 'Washing machine', 'Towels', 'Coffee machine', 'Baby seat', 'Kitchen'],
+    coordinations:
+    {
+      lat: 52.3909553943508,
+      lng: 4.929309666406198,
+      zoom: 3
+    }
+    ,
     ownerInformation: {
       src: 'img/avatar-peter.jpg',
       name: 'Peter',
@@ -65,6 +86,13 @@ export const places: Place[] = [
     guests: 'Max 5 adults',
     price: 1100,
     facilities: ['Wi-Fi', 'Washing machine', 'Towels', 'Coffee machine', 'Baby seat', 'Kitchen'],
+    coordinations:
+    {
+      lat: 52.3809553943508,
+      lng: 4.939309666406198,
+      zoom: 3
+    }
+    ,
     ownerInformation: {
       src: 'img/avatar-andrew.jpg',
       name: 'Andrew',
