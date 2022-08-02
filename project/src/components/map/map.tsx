@@ -1,4 +1,4 @@
-import { Icon, Marker } from 'leaflet';
+import { Icon, Marker, LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useRef, useEffect } from 'react';
 import useMap from '../../hooks/useMap';
@@ -34,18 +34,33 @@ function Map(props: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
+      const markersLayer = new LayerGroup();
+      markersLayer.addTo(map);
+
       places.forEach((place) => {
         const marker = new Marker({
-          lat: place.coordinations.lat,
-          lng: place.coordinations.lng,
+          lat: place.location.latitude,
+          lng: place.location.longitude,
         });
 
         marker
           .setIcon(place.id === placeId ? currentCustomIcon : defaultCustomIcon)
-          .addTo(map);
+          .addTo(markersLayer);
       });
+      return () => {
+        markersLayer.remove();
+      };
     }
   }, [map, placeId, places]);
+
+  useEffect(() => {
+    if (map) {
+      map.flyTo([city.location.latitude, city.location.longitude], city.location.zoom, {
+        animate: true,
+        duration: 0.9
+      });
+    }
+  }, [map, city]);
 
   return (
     <div

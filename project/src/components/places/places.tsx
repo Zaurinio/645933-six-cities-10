@@ -1,18 +1,20 @@
 import { Place } from '../../types/places';
 import PlaceCard from '../place-card/place-card';
 
+
 type PlacesProps = {
   places: Place[];
-  onCardMouseOver: (id: number) => void;
+  onCardMouseOver: (id: number | null) => void;
 }
 
 function Places(props: PlacesProps): JSX.Element {
   const { places, onCardMouseOver } = props;
+  const placesQuantity = places.length;
 
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
-      <b className="places__found">312 places to stay in Amsterdam</b>
+      <b className="places__found">{placesQuantity} places to stay in Amsterdam</b>
       <form className="places__sorting" action="#" method="get">
         <span className="places__sorting-caption">Sort by</span>
         <span className="places__sorting-type" tabIndex={0}>

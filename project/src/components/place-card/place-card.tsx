@@ -4,12 +4,10 @@ import { Link } from 'react-router-dom';
 
 type PlaceCardProps = {
   place: Place;
-  onCardMouseOver?: (id: number) => void;
+  onCardMouseOver?: (id: number | null) => void;
 }
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
-
-
   const { place, onCardMouseOver } = props;
 
   const checkMouseOver = () => {
@@ -18,15 +16,20 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
     }
   };
 
+  const checkMouseLeave = () => {
+    if (onCardMouseOver) {
+      onCardMouseOver(null);
+    }
+  };
 
   return (
-    <article className="cities__card place-card" onMouseOver={checkMouseOver}>
+    <article className="cities__card place-card" onMouseOver={checkMouseOver} onMouseLeave={checkMouseLeave}>
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/">
-          <img className="place-card__image" src={place.src} width="260" height="200" alt="Place" />
+          <img className="place-card__image" src={place.previewImage} width="260" height="200" alt="Place" />
         </a>
       </div>
       <div className="place-card__info">

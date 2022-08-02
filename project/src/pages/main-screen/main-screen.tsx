@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import { Place } from '../../types/places';
-import { City } from '../../types/city';
 import Places from '../../components/places/places';
 import Map from '../../components/map/map';
+import Locations from '../../components/locations/locations';
+import { useAppSelector } from '../../hooks/index';
 
 type MainScreenProps = {
   places: Place[];
-  city: City;
 }
 
-function MainScreen({ places, city }: MainScreenProps): JSX.Element {
+function MainScreen({ places }: MainScreenProps): JSX.Element {
   const [placeId, setPlaceId] = useState<number | null>(null);
+  const activeCityName = useAppSelector((state) => state.city);
+
+  const placesByCities = places.filter((place) => place.city.name === activeCityName);
+  const activeCityData = placesByCities[0].city;
 
   return (
     <div className="page page--gray page--main">
@@ -48,48 +52,19 @@ function MainScreen({ places, city }: MainScreenProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              <Locations activeCity={activeCityName} />
             </ul>
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <Places
-              places={places}
+              places={placesByCities}
               onCardMouseOver={setPlaceId}
             />
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map places={places} city={city} placeId={placeId} />
+                <Map places={placesByCities} city={activeCityData} placeId={placeId} />
               </section>
             </div>
           </div>
