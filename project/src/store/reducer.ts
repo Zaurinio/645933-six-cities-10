@@ -4,16 +4,6 @@ import { places } from '../mocks/places';
 import { selectCity } from './action';
 import { uploadPlaces } from './action';
 
-// const offersByCities: {
-//   [propertyName: string]: object,
-// };
-
-// offersByCities = {};
-
-// Object.keys(Cities).forEach((city) => {
-//   offersByCities[city] = places;
-// });
-
 const initialState = {
   city: Cities.Paris,
   places: places

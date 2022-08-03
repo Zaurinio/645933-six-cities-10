@@ -1,17 +1,14 @@
 import { useState } from 'react';
-import { Place } from '../../types/places';
 import Places from '../../components/places/places';
 import Map from '../../components/map/map';
 import Locations from '../../components/locations/locations';
 import { useAppSelector } from '../../hooks/index';
 
-type MainScreenProps = {
-  places: Place[];
-}
 
-function MainScreen({ places }: MainScreenProps): JSX.Element {
+function MainScreen(): JSX.Element {
   const [placeId, setPlaceId] = useState<number | null>(null);
   const activeCityName = useAppSelector((state) => state.city);
+  const places = useAppSelector((state) => state.places);
 
   const placesByCities = places.filter((place) => place.city.name === activeCityName);
   const activeCityData = placesByCities[0].city;

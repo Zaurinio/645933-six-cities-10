@@ -1,15 +1,11 @@
 import Logo from '../../components/logo/logo';
-import { Place } from '../../types/places';
 import { useParams } from 'react-router-dom';
 import CommentForm from '../../components/comment-form/comment-form';
+import { useAppSelector } from '../../hooks/index';
 
-type RoomcreenProps = {
-  places: Place[];
-}
-
-function Room({ places }: RoomcreenProps): JSX.Element {
+function Room(): JSX.Element {
   const params = useParams();
-
+  const places = useAppSelector((state) => state.places);
   const roomData = places.find((place) => place.id.toString() === params.id);
 
   return (

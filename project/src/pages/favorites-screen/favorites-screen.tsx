@@ -1,12 +1,11 @@
 import Logo from '../../components/logo/logo';
 import PlaceCard from '../../components/place-card/place-card';
 import { Place } from '../../types/places';
+import { useAppSelector } from '../../hooks/index';
 
-type FavoritesProps = {
-  places: Place[];
-}
+function FavoritesScreen(): JSX.Element {
+  const places = useAppSelector((state) => state.places);
 
-function FavoritesScreen({ places }: FavoritesProps): JSX.Element {
   return (
     <div className="page">
       <header className="header">
