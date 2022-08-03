@@ -1,15 +1,11 @@
 import Logo from '../../components/logo/logo';
-import { Place } from '../../types/places';
 import { useParams } from 'react-router-dom';
 import CommentForm from '../../components/comment-form/comment-form';
+import { useAppSelector } from '../../hooks/index';
 
-type RoomcreenProps = {
-  places: Place[];
-}
-
-function Room({ places }: RoomcreenProps): JSX.Element {
+function Room(): JSX.Element {
   const params = useParams();
-
+  const places = useAppSelector((state) => state.places);
   const roomData = places.find((place) => place.id.toString() === params.id);
 
   return (
@@ -83,20 +79,20 @@ function Room({ places }: RoomcreenProps): JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{ width: `${roomData ? roomData.raiting / 5 * 100 : 0}%` }}></span>
+                  <span style={{ width: `${roomData ? roomData.rating / 5 * 100 : 0}%` }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{roomData?.raiting}</span>
+                <span className="property__rating-value rating__value">{roomData?.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {roomData?.housingType}
+                  {roomData?.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {roomData?.bedrooms}
+                  {roomData?.bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  {roomData?.guests}
+                  {roomData?.maxAdults}
                 </li>
               </ul>
               <div className="property__price">
@@ -106,9 +102,9 @@ function Room({ places }: RoomcreenProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {roomData?.facilities.map((facility) => (
-                    <li key={facility} className="property__inside-item">
-                      {facility}
+                  {roomData?.goods.map((item) => (
+                    <li key={item} className="property__inside-item">
+                      {item}
                     </li>
                   ))}
                 </ul>
@@ -120,10 +116,10 @@ function Room({ places }: RoomcreenProps): JSX.Element {
                     <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    {roomData?.ownerInformation.name}
+                    {roomData?.host.name}
                   </span>
                   <span className="property__user-status">
-                    {roomData?.ownerInformation.pro}
+                    {roomData?.host.isPro}
                   </span>
                 </div>
                 <div className="property__description">
