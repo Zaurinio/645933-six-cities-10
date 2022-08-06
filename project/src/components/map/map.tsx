@@ -4,11 +4,9 @@ import { useRef, useEffect } from 'react';
 import useMap from '../../hooks/useMap';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
 import { Place } from '../../types/places';
-import { City } from '../../types/city';
 
 type MapProps = {
   places: Place[];
-  city: City;
   placeId: number | null;
 }
 
@@ -26,7 +24,9 @@ const currentCustomIcon = new Icon({
 
 
 function Map(props: MapProps): JSX.Element {
-  const { city, places, placeId } = props;
+  const { places, placeId } = props;
+
+  const city = places[0].city;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);

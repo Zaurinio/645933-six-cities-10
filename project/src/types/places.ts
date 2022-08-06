@@ -45,3 +45,6 @@ export type Place = {
   title: string
   type: string
 };
+
+
+export type Places = Place[];

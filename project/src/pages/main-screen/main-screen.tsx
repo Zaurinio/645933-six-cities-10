@@ -11,7 +11,6 @@ function MainScreen(): JSX.Element {
   const places = useAppSelector((state) => state.places);
 
   const placesByCities = places.filter((place) => place.city.name === activeCityName);
-  const activeCityData = placesByCities[0].city;
 
   return (
     <div className="page page--gray page--main">
@@ -58,10 +57,11 @@ function MainScreen(): JSX.Element {
             <Places
               places={placesByCities}
               onCardMouseOver={setPlaceId}
+              activeCity={activeCityName}
             />
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map places={placesByCities} city={activeCityData} placeId={placeId} />
+                <Map places={placesByCities} placeId={placeId} />
               </section>
             </div>
           </div>
