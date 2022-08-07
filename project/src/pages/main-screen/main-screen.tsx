@@ -1,19 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Places from '../../components/places/places';
 import Map from '../../components/map/map';
 import Locations from '../../components/locations/locations';
 import { useAppSelector } from '../../hooks/index';
 import { fetchPlaceAction } from '../../store/api-actions';
-import { store } from '../../store';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { useAppDispatch } from '../../hooks/index';
 
-store.dispatch(fetchPlaceAction());
 
 function MainScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const { isMainPageReady } = useAppSelector((state) => state);
+
+  useEffect(() => {
+    dispatch(fetchPlaceAction());
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const [placeId, setPlaceId] = useState<number | null>(null);
   const activeCityName = useAppSelector((state) => state.city);
   const places = useAppSelector((state) => state.places);
-
   const placesByCities = places.filter((place) => place.city.name === activeCityName);
+
+  if (!isMainPageReady) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="page page--gray page--main">

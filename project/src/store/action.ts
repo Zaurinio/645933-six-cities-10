@@ -14,3 +14,5 @@ export const setError = createAction<string | null>('game/setError');
 
 export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
 
+export const setMainPageReadyStatus = createAction<boolean>('data/setMainPageReadyStatus');
+

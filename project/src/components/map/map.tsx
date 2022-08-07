@@ -23,8 +23,7 @@ const currentCustomIcon = new Icon({
 });
 
 
-function Map(props: MapProps): JSX.Element {
-  const { places, placeId } = props;
+function Map({ places, placeId }: MapProps): JSX.Element {
 
   const city = places[0].city;
 

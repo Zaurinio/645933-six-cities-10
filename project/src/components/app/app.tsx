@@ -11,9 +11,9 @@ import { useAppSelector } from '../../hooks';
 import { isCheckedAuth } from '../../index';
 
 function App(): JSX.Element {
-  const { isDataLoaded, authorizationStatus } = useAppSelector((state) => state);
+  const { authorizationStatus } = useAppSelector((state) => state);
 
-  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+  if (isCheckedAuth(authorizationStatus)) {
     return (
       <LoadingScreen />
     );
