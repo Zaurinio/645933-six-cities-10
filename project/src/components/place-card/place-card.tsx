@@ -52,7 +52,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`./room/${place.id}`}>{place.description}</Link>
+          <Link to={`./room/${place.id}`}>{place.title}</Link>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>

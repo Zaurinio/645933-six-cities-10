@@ -3,7 +3,10 @@ import Places from '../../components/places/places';
 import Map from '../../components/map/map';
 import Locations from '../../components/locations/locations';
 import { useAppSelector } from '../../hooks/index';
+import { fetchPlaceAction } from '../../store/api-actions';
+import { store } from '../../store';
 
+store.dispatch(fetchPlaceAction());
 
 function MainScreen(): JSX.Element {
   const [placeId, setPlaceId] = useState<number | null>(null);

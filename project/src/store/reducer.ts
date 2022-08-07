@@ -1,7 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Cities, AuthorizationStatus } from '../const';
-// import { places } from '../mocks/places';
-import { selectCity, uploadPlaces, requireAuthorization, setDataLoadedStatus, setError } from './action';
+import { selectCity, setPlaces, setAuthorizationStatus, setDataLoadedStatus, setError } from './action';
 import { Places } from '../types/places';
 
 type InitialState = {
@@ -25,10 +24,10 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(selectCity, (state, action) => {
       state.city = action.payload;
     })
-    .addCase(uploadPlaces, (state, action) => {
+    .addCase(setPlaces, (state, action) => {
       state.places = action.payload;
     })
-    .addCase(requireAuthorization, (state, action) => {
+    .addCase(setAuthorizationStatus, (state, action) => {
       state.authorizationStatus = action.payload;
     })
     .addCase(setDataLoadedStatus, (state, action) => {

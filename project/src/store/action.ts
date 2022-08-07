@@ -6,9 +6,9 @@ export const selectCity = createAction('main/selectCity', (city) => ({
   payload: city
 }));
 
-export const uploadPlaces = createAction<Places>('main/uploadPlaces');
+export const setPlaces = createAction<Places>('main/uploadPlaces');
 
-export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+export const setAuthorizationStatus = createAction<AuthorizationStatus>('user/requireAuthorization');
 
 export const setError = createAction<string | null>('game/setError');
 
