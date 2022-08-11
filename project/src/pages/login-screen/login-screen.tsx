@@ -9,6 +9,7 @@ import { AuthData } from '../../types/auth-data';
 function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const passwordTerms = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$/;
 
   const dispatch = useAppDispatch();
   // const navigate = useNavigate();
@@ -20,7 +21,7 @@ function LoginScreen(): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current !== null && passwordRef.current !== null && passwordTerms.test(String(passwordRef.current.value))) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
