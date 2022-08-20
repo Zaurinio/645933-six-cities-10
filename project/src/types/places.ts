@@ -46,5 +46,24 @@ export type Place = {
   type: string
 };
 
+export type Comment = {
+  comment: string
+  date: string
+  id: number
+  rating: number
+  user: {
+    avatarUrl: string
+    id: number
+    isPro: boolean
+    name: string
+  }
+};
+
+export type PostingComment = {
+  comment: string
+  rating: number | null
+}
+
 
 export type Places = Place[];
+export type Comments = Comment[];

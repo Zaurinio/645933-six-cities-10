@@ -26,7 +26,26 @@ export enum Cities {
 
 export enum APIRoute {
   Places = '/hotels',
+  Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
 }
 
+export enum PlaceType {
+  cities = 'cities',
+  nearPlaces = 'near-places',
+}
+
+export enum SortType {
+  default = 'default',
+  priceLowToHigh = 'price-low-to-high',
+  priceHighToLow = 'price-high-to-low',
+  rating = 'rating',
+}
+
+export enum NameSpace {
+  Places = 'PLACES',
+  Comments = 'COMMENTS',
+  Favorites = 'FAVORITES',
+  User = 'USER',
+}

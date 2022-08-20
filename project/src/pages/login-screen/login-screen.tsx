@@ -1,10 +1,8 @@
 import Logo from '../../components/logo/logo';
 import { useRef, FormEvent } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/index';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
-// import { AppRoute } from '../../const';
 
 function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -12,7 +10,6 @@ function LoginScreen(): JSX.Element {
   const passwordTerms = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$/;
 
   const dispatch = useAppDispatch();
-  // const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));

@@ -1,7 +1,8 @@
 import { Cities } from '../../const';
 import { Link } from 'react-router-dom';
-import { selectCity } from '../../store/action';
+// import { selectCity } from '../../store/action';
 import { useAppDispatch } from '../../hooks/index';
+import { changeCity } from '../../store/places-data/places-data';
 
 type LocationsProps = {
   activeCity: string;
@@ -11,7 +12,7 @@ function Locations({ activeCity }: LocationsProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleCitySelect = (city: string) => {
-    dispatch(selectCity(city));
+    dispatch(changeCity(city));
   };
 
   return (

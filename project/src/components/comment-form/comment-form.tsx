@@ -1,43 +1,69 @@
 import React from 'react';
+import { useState, useRef } from 'react';
+import { postCommentAction } from '../../store/api-actions';
+import { useAppDispatch } from '../../hooks/index';
 
-function CommentForm(): JSX.Element {
+type CommentFormProps = {
+  placeId: number;
+}
 
-  const raiting: string[] = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
+function CommentForm({ placeId }: CommentFormProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const [data, setData] = React.useState({
-    rating: '',
-    text: ''
+  const placeRraiting = [
+    { rating: '5', value: 'perfect' },
+    { rating: '4', value: 'good' },
+    { rating: '3', value: 'not bad' },
+    { rating: '2', value: 'badly' },
+    { rating: '1', value: 'terribly' },
+  ];
+
+  const [formData, setData] = useState({
+    rating: null,
+    comment: ''
   });
 
   const handleInputRating = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
-    setData({ ...data, [name]: value });
+    setData({ ...formData, [name]: Number(value) });
   };
 
   const handleTextareaText = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = evt.target;
-    setData({ ...data, [name]: value });
+    const { value } = evt.target;
+    setData({ ...formData, comment: value });
   };
 
+  const handleFormSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    await dispatch(postCommentAction({ formData, placeId }));
+    setData({ ...formData, rating: null, comment: '' });
+    if (formRef.current !== null) {
+      formRef.current.reset();
+    }
+  };
+
+  const submitButtonStatus = !(formData.rating && formData.comment);
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form ref={formRef} onSubmit={handleFormSubmit} className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
-          raiting.map((value, index) => (
-            <React.Fragment key={`${value}-key`}>
+          placeRraiting.map((item, index) => (
+            <React.Fragment key={`${item.value}-key`}>
               < input
                 className="form__rating-input visually-hidden"
                 name="rating"
-                value={value}
-                id={`${value}-stars`}
+                value={item.rating}
+                id={`${item.rating}-stars`}
                 type="radio"
                 onChange={handleInputRating}
               />
               <label
-                htmlFor={`${value}-stars`}
+                htmlFor={`${item.rating}-stars`}
                 className="reviews__rating-label form__rating-label"
-                title={String(raiting.length - index)}
+                title={String(placeRraiting.length - index)}
               >
                 <svg className="form__star-image" width="37" height="33">
                   <use xlinkHref="#icon-star"></use>
@@ -59,7 +85,7 @@ function CommentForm(): JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={submitButtonStatus}>Submit</button>
       </div>
     </form >
   );

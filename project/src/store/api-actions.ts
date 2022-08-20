@@ -1,26 +1,30 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
-import { Places } from '../types/places';
-import { setPlaces, setAuthorizationStatus, setError, redirectToRoute } from './action';
+import { Places, Place, Comments, PostingComment } from '../types/places';
+import { redirectToRoute, setError } from './action';
 import { saveToken, dropToken } from '../services/token';
-import { APIRoute, AuthorizationStatus, AppRoute, TIMEOUT_SHOW_ERROR } from '../const';
+import { APIRoute, AppRoute, TIMEOUT_SHOW_ERROR } from '../const';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
-import { store } from './';
-import { setMainPageReadyStatus } from './action';
 
-export const clearErrorAction = createAsyncThunk(
+// import { setError } from '../store/user-process/user-process';
+
+export const clearErrorAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
   'data/clearError',
-  () => {
+  (_arg, { dispatch }) => {
     setTimeout(
-      () => store.dispatch(setError(null)),
+      () => dispatch(setError(null)),
       TIMEOUT_SHOW_ERROR,
     );
   },
 );
 
-export const fetchPlaceAction = createAsyncThunk<void, undefined, {
+export const fetchPlaceAction = createAsyncThunk<Places, undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -29,8 +33,59 @@ export const fetchPlaceAction = createAsyncThunk<void, undefined, {
   async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<Places>(APIRoute.Places);
 
-    dispatch(setPlaces(data));
-    dispatch(setMainPageReadyStatus(true));
+    return data;
+  },
+);
+
+export const fetchPlaceByIdAction = createAsyncThunk<Place, number, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchPlaceById',
+  async (placeId, { dispatch, extra: api }) => {
+    const { data } = await api.get<Place>(`${APIRoute.Places}/${placeId}`);
+
+    return data;
+  },
+);
+
+export const fetchNearestPlaceAction = createAsyncThunk<Places, number, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchNearestPlaces',
+  async (placeId, { dispatch, extra: api }) => {
+    const { data } = await api.get<Places>(`${APIRoute.Places}/${placeId}/nearby`);
+
+    return data;
+  },
+);
+
+export const fetchCommentAction = createAsyncThunk<Comments, number, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchComments',
+  async (placeId, { dispatch, extra: api }) => {
+    const { data } = await api.get<Comments>(`${APIRoute.Comments}/${placeId}`);
+
+    return data;
+  },
+);
+
+export const postCommentAction = createAsyncThunk<Comments, { formData: PostingComment, placeId: number }, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/postComment',
+  async ({ formData, placeId }, { dispatch, extra: api }) => {
+    const { data } = await api.post<Comments>(`${APIRoute.Comments}/${placeId}`, formData);
+
+    return data;
   },
 );
 
@@ -41,12 +96,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 }>(
   'user/checkAuth',
   async (_arg, { dispatch, extra: api }) => {
-    try {
-      await api.get(APIRoute.Login);
-      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
-    } catch {
-      dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
-    }
+    await api.get(APIRoute.Login);
   },
 );
 
@@ -59,7 +109,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   async ({ login: email, password }, { dispatch, extra: api }) => {
     const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(token);
-    dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+    // dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Main));
   },
 );
@@ -73,6 +123,8 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, { dispatch, extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    // dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
   },
 );
+
+

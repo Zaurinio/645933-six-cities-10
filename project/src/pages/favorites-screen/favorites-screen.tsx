@@ -2,9 +2,10 @@ import Logo from '../../components/logo/logo';
 import PlaceCard from '../../components/place-card/place-card';
 import { Place } from '../../types/places';
 import { useAppSelector } from '../../hooks/index';
+import { getPlaces } from '../../store/places-data/selectors';
 
 function FavoritesScreen(): JSX.Element {
-  const places = useAppSelector((state) => state.places);
+  const places = useAppSelector(getPlaces);
 
   return (
     <div className="page">
