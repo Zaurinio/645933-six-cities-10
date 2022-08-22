@@ -24,11 +24,13 @@ export enum Cities {
   Dusseldorf = 'Dusseldorf',
 }
 
+
 export enum APIRoute {
   Places = '/hotels',
   Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
+  Favorite = '/favorite',
 }
 
 export enum PlaceType {

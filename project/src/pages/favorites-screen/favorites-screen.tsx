@@ -1,64 +1,30 @@
-import Logo from '../../components/logo/logo';
-import PlaceCard from '../../components/place-card/place-card';
-import { Place } from '../../types/places';
-import { useAppSelector } from '../../hooks/index';
-import { getPlaces } from '../../store/places-data/selectors';
+import Header from '../../components/header/header';
+import Favorites from '../../components/favorites/favorites';
+import { fetchFavoriteAction } from '../../store/api-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
+import { getFavorites } from '../../store/places-data/selectors';
+import { useEffect } from 'react';
 
 function FavoritesScreen(): JSX.Element {
-  const places = useAppSelector(getPlaces);
+  const dispatch = useAppDispatch();
+  const favoritePlaces = useAppSelector(getFavorites);
+
+
+  useEffect(() => {
+    if (favoritePlaces.length === 0) {
+      dispatch(fetchFavoriteAction());
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="/">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="/">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="/">
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                <div className="favorites__places">
-                  {places.map((place: Place) => (
-                    <PlaceCard
-                      place={place}
-                      key={place.id}
-                    />
-                  ))}
-                </div>
-              </li>
-            </ul>
+            <Favorites favorites={favoritePlaces} />
           </section>
         </div>
       </main>

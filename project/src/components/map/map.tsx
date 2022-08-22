@@ -3,10 +3,10 @@ import 'leaflet/dist/leaflet.css';
 import { useRef, useEffect } from 'react';
 import useMap from '../../hooks/useMap';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
-import { Place } from '../../types/places';
+import { Places } from '../../types/places';
 
 type MapProps = {
-  places: Place[];
+  places: Places;
   placeId: number | null;
 }
 
