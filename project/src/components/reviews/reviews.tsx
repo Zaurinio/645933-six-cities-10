@@ -1,15 +1,20 @@
 import { useAppSelector } from '../../hooks/index';
-import { formatDateDisplayValue, formatDateAttribute } from '../../utils';
+import { formatDateDisplayValue, formatDateAttribute, sortReviewsByDate } from '../../utils';
 import { getComments } from '../../store/comments-data/selectors';
 
 function ReviewList(): JSX.Element {
 
   const comments = useAppSelector(getComments);
 
+  const sortedComments = [...comments];
+  sortedComments.sort(sortReviewsByDate);
+
+  const topComments = sortedComments.slice(0, 10);
+
   return (
     <ul className="reviews__list">
       {
-        comments.map((comment) => (
+        topComments.map((comment) => (
           < li className="reviews__item" key={comment.id}>
             <div className="reviews__user user">
               <div className="reviews__avatar-wrapper user__avatar-wrapper">

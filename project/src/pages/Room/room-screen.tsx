@@ -4,12 +4,12 @@ import { useParams } from 'react-router-dom';
 import CommentForm from '../../components/comment-form/comment-form';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
 import ReviewList from '../../components/reviews/reviews';
-import { fetchCommentAction, fetchPlaceByIdAction, fetchNearestPlaceAction, changeFavoriteStatusAction } from '../../store/api-actions';
+import { fetchCommentAction, fetchPlaceByIdAction, fetchNearestPlaceAction, changeFavoriteStatusAction, fetchFavoriteAction } from '../../store/api-actions';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import Map from '../../components/map/map';
 import NearestPlaces from '../../components/nearest-places/nearest-places';
 import { AuthorizationStatus } from '../../const';
-import { getPlaceById, getNearestPlaces } from '../../store/places-data/selectors';
+import { getPlaceById, getNearestPlaces, getFavorites } from '../../store/places-data/selectors';
 import { getComments } from '../../store/comments-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { Places } from '../../types/places';
@@ -22,7 +22,7 @@ function Room(): JSX.Element {
     if (params) {
       dispatch(fetchPlaceByIdAction(Number(params.id)));
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [params]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const placeById = useAppSelector(getPlaceById);
 
@@ -32,6 +32,15 @@ function Room(): JSX.Element {
       dispatch(fetchNearestPlaceAction(placeById.id));
     }
   }, [placeById]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const favoritePlaces = useAppSelector(getFavorites);
+
+
+  useEffect(() => {
+    if (favoritePlaces.length === 0) {
+      dispatch(fetchFavoriteAction());
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const comments = useAppSelector(getComments);
@@ -43,7 +52,7 @@ function Room(): JSX.Element {
     allPlacesList = [...nearestPlaces, placeById] as Places;
   }
 
-  const handleFavoriteStatus = () => {
+  const handleFavoriteStatusChange = () => {
     dispatch(changeFavoriteStatusAction({ placeId: placeById.id, status: !placeById.isFavorite ? 1 : 0 }));
   };
 
@@ -81,7 +90,7 @@ function Room(): JSX.Element {
                 <h1 className="property__name">
                   Beautiful &amp; luxurious studio at great location
                 </h1>
-                <button onClick={handleFavoriteStatus} className="property__bookmark-button property__bookmark-button--active button" type="button">
+                <button onClick={handleFavoriteStatusChange} className="property__bookmark-button property__bookmark-button--active button" type="button">
                   <svg className={`property__bookmark-icon ${placeById.isFavorite ? 'place-card__bookmark-icon' : ''}`} width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>

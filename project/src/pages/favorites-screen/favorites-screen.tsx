@@ -24,7 +24,13 @@ function FavoritesScreen(): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <Favorites favorites={favoritePlaces} />
+            {favoritePlaces.length === 0 ?
+              (
+                <div className="favorites__status-wrapper">
+                  <b className="favorites__status">Nothing yet saved.</b>
+                  <p className="favorites__status-description">Save properties to narrow down search or plan your future trips.</p>
+                </div>
+              ) : <Favorites favorites={favoritePlaces} />}
           </section>
         </div>
       </main>
@@ -38,3 +44,12 @@ function FavoritesScreen(): JSX.Element {
 }
 
 export default FavoritesScreen;
+
+
+// {favoritePlaces.length === 0 ?
+//   (
+//     <div className="favorites__status-wrapper">
+//       <b className="favorites__status">Nothing yet saved.</b>
+//       <p className="favorites__status-description">Save properties to narrow down search or plan your future trips.</p>
+//     </div>
+//   ) : <Favorites favorites={favoritePlaces} />}

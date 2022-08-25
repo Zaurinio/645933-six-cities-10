@@ -36,6 +36,7 @@ export enum APIRoute {
 export enum PlaceType {
   cities = 'cities',
   nearPlaces = 'near-places',
+  favorites = 'favorites',
 }
 
 export enum SortType {
@@ -51,3 +52,4 @@ export enum NameSpace {
   Favorites = 'FAVORITES',
   User = 'USER',
 }
+
