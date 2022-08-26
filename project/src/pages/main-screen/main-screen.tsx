@@ -3,8 +3,9 @@ import Places from '../../components/places/places';
 import Map from '../../components/map/map';
 import Locations from '../../components/locations/locations';
 import Header from '../../components/header/header';
+import EmptyPage from '../../components/empty-page/empty-page';
 import { useAppSelector } from '../../hooks/index';
-import { fetchPlaceAction } from '../../store/api-actions';
+import { fetchPlaceAction, fetchFavoriteAction } from '../../store/api-actions';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppDispatch } from '../../hooks/index';
 import { sortPlacesByPriceLowToHigh, sortPlacesByPriceHighToLow, sortPlacesByRating } from '../../utils';
@@ -19,6 +20,7 @@ function MainScreen(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchPlaceAction());
+    dispatch(fetchFavoriteAction());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const sortType = useAppSelector(getSortType);
@@ -69,20 +71,24 @@ function MainScreen(): JSX.Element {
             </ul>
           </section>
         </div>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <Places
-              places={sortedPlacesByCities}
-              onCardMouseOver={checkMouseOver}
-              activeCity={activeCityName}
-            />
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map places={placesByCities} placeId={placeId} />
-              </section>
+        {
+          places.length > 0 ? (
+            <div className="cities">
+              <div className="cities__places-container container">
+                <Places
+                  places={sortedPlacesByCities}
+                  onCardMouseOver={checkMouseOver}
+                  activeCity={activeCityName}
+                />
+                <div className="cities__right-section">
+                  <section className="cities__map map">
+                    <Map places={placesByCities} placeId={placeId} />
+                  </section>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          ) : <EmptyPage />
+        }
       </main>
     </div>
   );

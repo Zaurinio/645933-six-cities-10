@@ -24,16 +24,19 @@ export enum Cities {
   Dusseldorf = 'Dusseldorf',
 }
 
+
 export enum APIRoute {
   Places = '/hotels',
   Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
+  Favorite = '/favorite',
 }
 
 export enum PlaceType {
   cities = 'cities',
   nearPlaces = 'near-places',
+  favorites = 'favorites',
 }
 
 export enum SortType {
@@ -49,3 +52,4 @@ export enum NameSpace {
   Favorites = 'FAVORITES',
   User = 'USER',
 }
+

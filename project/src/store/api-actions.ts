@@ -63,14 +63,28 @@ export const fetchNearestPlaceAction = createAsyncThunk<Places, number, {
   },
 );
 
-export const fetchCommentAction = createAsyncThunk<Comments, number, {
+export const fetchFavoriteAction = createAsyncThunk<Places, undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
-  'data/fetchComments',
-  async (placeId, { dispatch, extra: api }) => {
-    const { data } = await api.get<Comments>(`${APIRoute.Comments}/${placeId}`);
+  'data/fetchFavorites',
+  async (_arg, { dispatch, extra: api }) => {
+    const { data } = await api.get<Places>(`${APIRoute.Favorite}`);
+
+    return data;
+  },
+);
+
+export const changeFavoriteStatusAction = createAsyncThunk<Place, { placeId: number, status: number }, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/changeFavoriteStatus',
+  async ({ placeId, status }, { dispatch, extra: api }) => {
+    const { data } = await api.post<Place>(`${APIRoute.Favorite}/${placeId}/${status}`);
+    dispatch(fetchFavoriteAction());
 
     return data;
   },
@@ -84,6 +98,19 @@ export const postCommentAction = createAsyncThunk<Comments, { formData: PostingC
   'data/postComment',
   async ({ formData, placeId }, { dispatch, extra: api }) => {
     const { data } = await api.post<Comments>(`${APIRoute.Comments}/${placeId}`, formData);
+
+    return data;
+  },
+);
+
+export const fetchCommentAction = createAsyncThunk<Comments, number, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchComments',
+  async (placeId, { dispatch, extra: api }) => {
+    const { data } = await api.get<Comments>(`${APIRoute.Comments}/${placeId}`);
 
     return data;
   },

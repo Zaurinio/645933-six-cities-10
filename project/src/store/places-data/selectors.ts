@@ -9,3 +9,4 @@ export const getNearestPlaces = (state: State): Places => state[NameSpace.Places
 export const getLoadedDataStatus = (state: State): boolean => state[NameSpace.Places].isDataLoaded;
 export const getMainPageReadyStatus = (state: State): boolean => state[NameSpace.Places].isMainPageReady;
 export const getSortType = (state: State): string => state[NameSpace.Places].sortType;
+export const getFavorites = (state: State): Places => state[NameSpace.Places].favorites;

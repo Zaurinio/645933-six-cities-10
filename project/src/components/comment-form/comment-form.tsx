@@ -11,7 +11,7 @@ function CommentForm({ placeId }: CommentFormProps): JSX.Element {
   const dispatch = useAppDispatch();
   const formRef = useRef<HTMLFormElement>(null);
 
-  const placeRraiting = [
+  const placeRaiting = [
     { rating: '5', value: 'perfect' },
     { rating: '4', value: 'good' },
     { rating: '3', value: 'not bad' },
@@ -21,8 +21,10 @@ function CommentForm({ placeId }: CommentFormProps): JSX.Element {
 
   const [formData, setData] = useState({
     rating: null,
-    comment: ''
+    comment: '',
   });
+
+  const [disableStatus, setDisableStatus] = useState(false);
 
   const handleInputRating = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
@@ -36,34 +38,40 @@ function CommentForm({ placeId }: CommentFormProps): JSX.Element {
 
   const handleFormSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    setDisableStatus(true);
     await dispatch(postCommentAction({ formData, placeId }));
     setData({ ...formData, rating: null, comment: '' });
     if (formRef.current !== null) {
       formRef.current.reset();
     }
+    setDisableStatus(false);
   };
 
-  const submitButtonStatus = !(formData.rating && formData.comment);
+  const commentsLengthCheck = formData.comment.length >= 50 && formData.comment.length <= 300;
+
+  const submitButtonDisableStatus = !(formData.rating && formData.comment && commentsLengthCheck && !disableStatus);
 
   return (
     <form ref={formRef} onSubmit={handleFormSubmit} className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
-          placeRraiting.map((item, index) => (
+          placeRaiting.map((item, index) => (
             <React.Fragment key={`${item.value}-key`}>
               < input
                 className="form__rating-input visually-hidden"
                 name="rating"
+                checked={Number(item.rating) === formData.rating}
                 value={item.rating}
                 id={`${item.rating}-stars`}
                 type="radio"
                 onChange={handleInputRating}
+                disabled={disableStatus}
               />
               <label
                 htmlFor={`${item.rating}-stars`}
                 className="reviews__rating-label form__rating-label"
-                title={String(placeRraiting.length - index)}
+                title={String(placeRaiting.length - index)}
               >
                 <svg className="form__star-image" width="37" height="33">
                   <use xlinkHref="#icon-star"></use>
@@ -79,13 +87,14 @@ function CommentForm({ placeId }: CommentFormProps): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleTextareaText}
+        disabled={disableStatus}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={submitButtonStatus}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={submitButtonDisableStatus}>Submit</button>
       </div>
     </form >
   );

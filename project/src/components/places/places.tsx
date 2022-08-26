@@ -2,7 +2,6 @@ import { Place } from '../../types/places';
 import PlaceCard from '../place-card/place-card';
 import { PlaceType } from '../../const';
 import Sorting from '../sorting/sorting';
-import { memo } from 'react';
 
 
 type PlacesProps = {
@@ -34,4 +33,4 @@ function Places(props: PlacesProps): JSX.Element {
   );
 }
 
-export default memo(Places, (prevProps, nextProps) => prevProps.activeCity === nextProps.activeCity);
+export default Places;

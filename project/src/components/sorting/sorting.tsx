@@ -8,6 +8,8 @@ function Sorting(): JSX.Element {
 
   const [sortMenuState, setSortMenuState] = useState<boolean>(false);
 
+  const [sortName, setSortName] = useState<string>('Popular');
+
   const toggleSortMenu = () => setSortMenuState(!sortMenuState);
 
   const handleSortType = (evt: MouseEvent<HTMLElement>) => {
@@ -17,24 +19,29 @@ function Sorting(): JSX.Element {
     switch (evt.currentTarget.dataset.sortType) {
       case SortType.priceLowToHigh:
         dispatch(changeSorting(SortType.priceLowToHigh));
+        setSortName('Price: low to high');
         break;
       case SortType.priceHighToLow:
         dispatch(changeSorting(SortType.priceHighToLow));
+        setSortName('Price: high to low');
         break;
       case SortType.rating:
         dispatch(changeSorting(SortType.rating));
+        setSortName('Top rated first');
         break;
       case SortType.default:
         dispatch(changeSorting(SortType.default));
+        setSortName('Popular');
         break;
     }
   };
+
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span onClick={toggleSortMenu} className="places__sorting-type" tabIndex={0}>
-        Popular
+        {sortName}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>

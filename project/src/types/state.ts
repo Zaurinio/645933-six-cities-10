@@ -19,6 +19,7 @@ export type PlacesData = {
   isDataLoaded: boolean,
   isMainPageReady: boolean,
   sortType: string,
+  favorites: Places,
 }
 
 export type CommentsData = {
