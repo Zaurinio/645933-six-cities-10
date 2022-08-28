@@ -12,9 +12,17 @@ import { isCheckedAuth } from '../../index';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { checkAuthAction } from '../../store/api-actions';
+import { useAppDispatch } from '../../hooks/index';
+import { useEffect } from 'react';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuthAction());
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (isCheckedAuth(authorizationStatus)) {
     return (

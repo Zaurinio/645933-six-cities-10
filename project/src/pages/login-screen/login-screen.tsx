@@ -1,15 +1,30 @@
 import Logo from '../../components/logo/logo';
-import { useRef, FormEvent } from 'react';
+import { useRef, FormEvent, MouseEvent, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/index';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
+import { getRandomPlace } from '../../utils';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { changeCity } from '../../store/places-data/places-data';
+import { useAppSelector } from '../../hooks/index';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const passwordTerms = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$/;
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
+
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Main);
+    }
+  }, [authorizationStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -24,6 +39,14 @@ function LoginScreen(): JSX.Element {
         password: passwordRef.current.value,
       });
     }
+  };
+
+  const randomPlace = getRandomPlace();
+
+  const handleRandomPlaceClick = (evt: MouseEvent<HTMLElement>, city: string) => {
+    evt.preventDefault();
+    navigate(AppRoute.Main);
+    dispatch(changeCity(city));
   };
 
   return (
@@ -56,8 +79,8 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="/">
-                <span>Amsterdam</span>
+              <a className="locations__item-link" href="/" onClick={(evt) => handleRandomPlaceClick(evt, randomPlace)}>
+                <span>{randomPlace}</span>
               </a>
             </div>
           </section>
