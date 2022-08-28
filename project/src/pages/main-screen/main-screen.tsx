@@ -87,7 +87,7 @@ function MainScreen(): JSX.Element {
                 </div>
               </div>
             </div>
-          ) : <EmptyPage />
+          ) : <EmptyPage activeCity={activeCityName} />
         }
       </main>
     </div>

@@ -1,6 +1,6 @@
 import Header from '../../components/header/header';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import CommentForm from '../../components/comment-form/comment-form';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
 import ReviewList from '../../components/reviews/reviews';
@@ -8,7 +8,7 @@ import { fetchCommentAction, fetchPlaceByIdAction, fetchNearestPlaceAction, chan
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import Map from '../../components/map/map';
 import NearestPlaces from '../../components/nearest-places/nearest-places';
-import { AuthorizationStatus } from '../../const';
+import { AuthorizationStatus, AppRoute } from '../../const';
 import { getPlaceById, getNearestPlaces, getFavorites } from '../../store/places-data/selectors';
 import { getComments } from '../../store/comments-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
@@ -17,6 +17,7 @@ import { Places } from '../../types/places';
 function Room(): JSX.Element {
   const dispatch = useAppDispatch();
   const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (params) {
@@ -53,7 +54,11 @@ function Room(): JSX.Element {
   }
 
   const handleFavoriteStatusChange = () => {
-    dispatch(changeFavoriteStatusAction({ placeId: placeById.id, status: !placeById.isFavorite ? 1 : 0 }));
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(changeFavoriteStatusAction({ placeId: placeById.id, status: !placeById.isFavorite ? 1 : 0 }));
+    } else {
+      navigate(AppRoute.Login);
+    }
   };
 
   if (!(nearestPlaces.length > 0 && comments.length > 0)) {
@@ -132,7 +137,7 @@ function Room(): JSX.Element {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={`property__avatar-wrapper ${placeById.host.isPro && 'property__avatar-wrapper--pro'} user__avatar-wrapper`}>
                     <img className="property__avatar user__avatar" src={placeById.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
