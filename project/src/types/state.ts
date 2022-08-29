@@ -27,4 +27,5 @@ export type PlacesData = {
 export type CommentsData = {
   comments: Comments,
   areCommentsDwonloaded: boolean,
+  isCommentFormSubmited: boolean,
 }

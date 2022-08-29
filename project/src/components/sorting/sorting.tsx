@@ -47,10 +47,10 @@ function Sorting(): JSX.Element {
         </svg>
       </span>
       <ul className={`places__options places__options--custom places__options${sortMenuState ? '--opened' : '--closed'}`}>
-        <li onClick={handleSortType} data-sort-type='default' className="places__option places__option--active" tabIndex={0}>Popular</li>
-        <li onClick={handleSortType} data-sort-type='price-low-to-high' className="places__option" tabIndex={0}>Price: low to high</li>
-        <li onClick={handleSortType} data-sort-type='price-high-to-low' className="places__option" tabIndex={0}>Price: high to low</li>
-        <li onClick={handleSortType} data-sort-type='rating' className="places__option" tabIndex={0}>Top rated first</li>
+        <li onClick={handleSortType} data-sort-type='default' className={`places__option ${sortName === 'Popular' ? 'places__option--active' : ''}`} tabIndex={0}>Popular</li>
+        <li onClick={handleSortType} data-sort-type='price-low-to-high' className={`places__option ${sortName === 'Price: low to high' ? 'places__option--active' : ''}`} tabIndex={0}>Price: low to high</li>
+        <li onClick={handleSortType} data-sort-type='price-high-to-low' className={`places__option ${sortName === 'Price: high to low' ? 'places__option--active' : ''}`} tabIndex={0}>Price: high to low</li>
+        <li onClick={handleSortType} data-sort-type='rating' className={`places__option ${sortName === 'Top rated first' ? 'places__option--active' : ''}`} tabIndex={0}>Top rated first</li>
       </ul>
     </form>
   );

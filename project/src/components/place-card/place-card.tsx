@@ -49,7 +49,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
           <span>Premium</span>
         </div> : ''}
       <div className={`${placeType}__image-wrapper place-card__image-wrapper`}>
-        <a href="#">
+        <a href={`/room/${place.id}`}>
           <img className="place-card__image" src={place.previewImage} width={imageWidth} height={imageHeight} alt="Place" />
         </a>
       </div>

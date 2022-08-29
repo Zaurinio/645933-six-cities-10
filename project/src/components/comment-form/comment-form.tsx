@@ -1,7 +1,8 @@
 import React from 'react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { postCommentAction } from '../../store/api-actions';
-import { useAppDispatch } from '../../hooks/index';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
+import { getCommentFormSubmitStatus } from '../../store/comments-data/selectors';
 
 type CommentFormProps = {
   placeId: number;
@@ -10,6 +11,7 @@ type CommentFormProps = {
 function CommentForm({ placeId }: CommentFormProps): JSX.Element {
   const dispatch = useAppDispatch();
   const formRef = useRef<HTMLFormElement>(null);
+  const commentFormSubmitStatus = useAppSelector(getCommentFormSubmitStatus);
 
   const placeRaiting = [
     { rating: '5', value: 'perfect' },
@@ -44,8 +46,11 @@ function CommentForm({ placeId }: CommentFormProps): JSX.Element {
     if (formRef.current !== null) {
       formRef.current.reset();
     }
-    setDisableStatus(false);
   };
+
+  useEffect(() => {
+    !commentFormSubmitStatus ? setDisableStatus(false) : setDisableStatus(true);
+  }, [commentFormSubmitStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const commentsLengthCheck = formData.comment.length >= 50 && formData.comment.length <= 300;
 

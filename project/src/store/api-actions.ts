@@ -8,8 +8,6 @@ import { APIRoute, AppRoute, TIMEOUT_SHOW_ERROR } from '../const';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 
-// import { setError } from '../store/user-process/user-process';
-
 export const clearErrorAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
   state: State,
@@ -152,7 +150,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, { dispatch, extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    // dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
   },
 );
 

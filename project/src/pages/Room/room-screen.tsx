@@ -5,7 +5,7 @@ import CommentForm from '../../components/comment-form/comment-form';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
 import ReviewList from '../../components/reviews/reviews';
 import { fetchCommentAction, fetchPlaceByIdAction, fetchNearestPlaceAction, changeFavoriteStatusAction, fetchFavoriteAction } from '../../store/api-actions';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Map from '../../components/map/map';
 import NearestPlaces from '../../components/nearest-places/nearest-places';
 import { AuthorizationStatus, AppRoute } from '../../const';
