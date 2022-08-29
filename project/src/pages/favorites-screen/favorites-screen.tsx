@@ -24,7 +24,7 @@ function FavoritesScreen(): JSX.Element {
     if (authorizationStatus === AuthorizationStatus.NoAuth) {
       navigate(AppRoute.Login);
     }
-  }, [authorizationStatus]);
+  }, [authorizationStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="page">
