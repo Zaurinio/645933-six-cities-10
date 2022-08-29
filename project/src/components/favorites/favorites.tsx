@@ -8,8 +8,6 @@ type FavoritesProps = {
 
 function Favorites({ favorites }: FavoritesProps): JSX.Element {
 
-  /*eslint-disable*/
-
   const favoriteCities: string[] = [];
 
   for (const obj of favorites) {
@@ -32,11 +30,8 @@ function Favorites({ favorites }: FavoritesProps): JSX.Element {
             </div>
             <div className="favorites__places">
               {
-                favorites.map((place) => {
-                  return place.city.name === city ? < PlaceCard place={place} placeType={PlaceType.favorites} key={city + place.id} /> : ''
-                })
+                favorites.map((place) => place.city.name === city ? < PlaceCard place={place} placeType={PlaceType.favorites} key={city + place.id} /> : '')
               }
-
             </div>
           </li>
         ))
