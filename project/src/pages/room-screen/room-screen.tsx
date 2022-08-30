@@ -169,9 +169,7 @@ function Room(): JSX.Element {
           </section>
         </section>
         <div className="container">
-          <section className="near-places places">
-            <NearestPlaces nearestPlaces={nearestPlaces} />
-          </section>
+          <NearestPlaces nearestPlaces={nearestPlaces} />
         </div>
       </main>
     </div>

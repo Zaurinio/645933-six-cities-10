@@ -1,6 +1,5 @@
 import { Cities } from '../../const';
 import { Link } from 'react-router-dom';
-// import { selectCity } from '../../store/action';
 import { useAppDispatch } from '../../hooks/index';
 import { changeCity } from '../../store/places-data/places-data';
 
