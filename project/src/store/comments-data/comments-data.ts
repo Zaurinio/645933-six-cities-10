@@ -25,6 +25,9 @@ export const commentsData = createSlice({
       .addCase(postCommentAction.pending, (state) => {
         state.isCommentFormSubmited = true;
       })
+      .addCase(postCommentAction.rejected, (state) => {
+        state.isCommentFormSubmited = false;
+      })
       .addCase(postCommentAction.fulfilled, (state, action) => {
         state.comments = action.payload;
         state.isCommentFormSubmited = false;
