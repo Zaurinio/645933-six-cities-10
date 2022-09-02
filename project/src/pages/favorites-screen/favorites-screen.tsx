@@ -18,13 +18,13 @@ function FavoritesScreen(): JSX.Element {
     if (favoritePlaces.length === 0) {
       dispatch(fetchFavoriteAction());
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dispatch, favoritePlaces.length]);
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.NoAuth) {
       navigate(AppRoute.Login);
     }
-  }, [authorizationStatus]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [authorizationStatus, navigate]);
 
   return (
     <div className="page">

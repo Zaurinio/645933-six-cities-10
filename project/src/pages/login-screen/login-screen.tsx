@@ -24,7 +24,7 @@ function LoginScreen(): JSX.Element {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       navigate(AppRoute.Main);
     }
-  }, [authorizationStatus]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [authorizationStatus, navigate]);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));

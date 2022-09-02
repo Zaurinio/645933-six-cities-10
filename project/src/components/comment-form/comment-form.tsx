@@ -50,7 +50,7 @@ function CommentForm({ placeId }: CommentFormProps): JSX.Element {
 
   useEffect(() => {
     !commentFormSubmitStatus ? setDisableStatus(false) : setDisableStatus(true);
-  }, [commentFormSubmitStatus]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [commentFormSubmitStatus]);
 
   const commentsLengthCheck = formData.comment.length >= 50 && formData.comment.length <= 300;
 

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import CommentForm from '../../components/comment-form/comment-form';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
-import ReviewList from '../../components/reviews/reviews';
+import ReviewList from '../../components/review-list/review-list';
 import { fetchCommentAction, fetchPlaceByIdAction, fetchNearestPlaceAction, changeFavoriteStatusAction, fetchFavoriteAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Map from '../../components/map/map';
@@ -14,7 +14,7 @@ import { getComments } from '../../store/comments-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { Places } from '../../types/places';
 
-function Room(): JSX.Element {
+function RoomScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const params = useParams();
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ function Room(): JSX.Element {
     if (params) {
       dispatch(fetchPlaceByIdAction(Number(params.id)));
     }
-  }, [params]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dispatch, params]);
 
   const placeById = useAppSelector(getPlaceById);
 
@@ -32,7 +32,7 @@ function Room(): JSX.Element {
       dispatch(fetchCommentAction(placeById.id));
       dispatch(fetchNearestPlaceAction(placeById.id));
     }
-  }, [placeById]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dispatch, placeById]);
 
   const favoritePlaces = useAppSelector(getFavorites);
 
@@ -41,7 +41,7 @@ function Room(): JSX.Element {
     if (favoritePlaces.length === 0) {
       dispatch(fetchFavoriteAction());
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dispatch, favoritePlaces.length]);
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const comments = useAppSelector(getComments);
@@ -93,7 +93,7 @@ function Room(): JSX.Element {
               )}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {placeById.title}
                 </h1>
                 <button onClick={handleFavoriteStatusChange} className="property__bookmark-button property__bookmark-button--active button" type="button">
                   <svg className={`property__bookmark-icon ${placeById.isFavorite ? 'place-card__bookmark-icon' : ''}`} width="31" height="33">
@@ -176,4 +176,4 @@ function Room(): JSX.Element {
   );
 }
 
-export default Room;
+export default RoomScreen;
