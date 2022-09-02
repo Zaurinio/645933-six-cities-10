@@ -21,7 +21,7 @@ function MainScreen(): JSX.Element {
   useEffect(() => {
     dispatch(fetchPlaceAction());
     dispatch(fetchFavoriteAction());
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   const sortType = useAppSelector(getSortType);
 
@@ -48,7 +48,6 @@ function MainScreen(): JSX.Element {
       break;
   }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const checkMouseOver = useCallback((value: number | null) => setPlaceId(value), []);
 
   if (!isMainPageReady) {

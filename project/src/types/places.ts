@@ -1,16 +1,4 @@
 
-export type OwnerInfomration = {
-  src: string;
-  name: string;
-  pro: string;
-}
-
-export type CoordinationDetail = {
-  lat: number,
-  lng: number,
-  zoom: number;
-}
-
 export type Place = {
   bedrooms: number
   city: {
