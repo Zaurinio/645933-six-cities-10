@@ -1,6 +1,7 @@
 {
   "name": "project",
   "version": "0.1.0",
+  "homepage": "https://zaurinio.github.io/645933-six-cities-10",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
@@ -17,6 +18,8 @@
     "reselect": "^4.0.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --passWithNoTests",
@@ -56,6 +59,7 @@
     "axios-mock-adapter": "^1.19.0",
     "eslint-config-htmlacademy": "^6.0.0",
     "faker": "^5.5.3",
+    "gh-pages": "^4.0.0",
     "redux-devtools-extension": "2.13",
     "typescript": "^4.7.4"
   }
